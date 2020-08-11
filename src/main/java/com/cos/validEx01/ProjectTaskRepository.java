@@ -6,5 +6,4 @@ public interface ProjectTaskRepository  extends JpaRepository< ProjectTask, Long
 	//Service 생략했어요
 	
 	
-	
 }

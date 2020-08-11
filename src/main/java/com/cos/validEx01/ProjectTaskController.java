@@ -33,22 +33,9 @@ public class ProjectTaskController {
 	public ResponseEntity<?> save(@Valid @RequestBody ProjectTask requestProjectTask, BindingResult bindingResult){
 		//request안에 있는 거니까 필터에서 처리한다. 컨트롤러 타기 전에 BindingResult가 IoC되어 있다. 그래서 DI해서 쓸 수 있다.
 		
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			
-			RespDto<?> respDto = RespDto.builder()
-					.statusCode(StatusCode.FAIL)
-					.msg("save 요청에 실패하였습니다.")
-					.data(errorMap)
-					.build();
 		
-			
-			return new ResponseEntity<RespDto>(respDto, HttpStatus.BAD_REQUEST);
 			//System.out.println(bindingResult.getFieldError());
-		}
+		
 		
 		ProjectTask entityProjectTask = projectTaskRepository.save(requestProjectTask);
 		RespDto<?> respDto = RespDto.builder()
@@ -56,11 +43,16 @@ public class ProjectTaskController {
 				.msg("요청에 성공하였습니다.")
 				.data(entityProjectTask)
 				.build();
+		//return 할 때 ResponseEntity<?>를 쓰면 편함.
+		//?에 내가 return하고 싶은 것을 넣는다
+		//ex) SELECT -> return할  object type
+		//save했을 때 많이 쓰이는 숫자값(1:정상, 2: 아이디, 3.....)
 		
-		
+		//http 상태코드 참고
 		return new ResponseEntity<RespDto>(respDto, HttpStatus.CREATED); //201
 		
 		//헤더말고 바디만 까서 status 확인하려고 내가 RequestDto만들어서 하는 방법이 있다
+		//예전에 만들었던 CommonRespCto를 만들면 status(상태값)을 하나 더 넣을 수 있어서 추천
 		
 	}
 

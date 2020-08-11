@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -26,6 +27,8 @@ public class ProjectTask {
 	@NotBlank(message = "acceptanceCriteria cannot be blank") //내가 적은 메세지
 	private String acceptanceCriteria;
 	private String status;
+	@Email(message = "Your email XXX")
+	private String email;
 	
 	//requestDto는 여러개   페이지 마다 따로따로 다 만들어야한다. 필요해요!
 	//reponseDto는 하나만?
